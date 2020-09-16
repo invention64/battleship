@@ -1,8 +1,21 @@
 #include <ncurses.h>
 #include <stdlib.h>
 #include "board.h"
+#include "colors.h"
 
 void drawBoard(int ** board) {
+	char head = 'A';
+	// Draw Heading
+	for (int i=0; i<8; i++) {
+		mvaddch(1, i*2 + 2, head+i);
+		mvprintw(i*2 + 2, 1, "%d", i + 1);
+	}
+	
+	// fg and bg temp vars
+	int fg, bg;
+	fg = 7;
+	bg = 1;
+	// Draw Board
 	for (int i=0; i<8; i++) {
 		for (int j=0; j<8; j++){
 			char temp;
@@ -12,17 +25,23 @@ void drawBoard(int ** board) {
 					break;
 				case BOAT:
 					temp = '#';
+					bg = 0;
+					fg = 7;
 					break;
 				case HIT:
-					temp = 'X';
+					temp = 'O';
+					fg = 4;
 					break;
 				case MISS:
 					temp = 'O';
+					fg = 7;
 					break;
 				default:
-					temp = '?';	
+					temp = '?';
 			}
-			mvaddch(i + 2, j + 2, temp); 
+			setcolor(fg, bg);
+			mvaddch(j*2 + 2, i*2 + 2, temp); 
+			unsetcolor(fg, bg);
 		}
 	}
 	refresh();

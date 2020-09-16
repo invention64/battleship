@@ -58,7 +58,7 @@ int main(int argc, char ** args)
 	clear();
 	refresh();
 
-	mvaddstr(2, 12, "Drawn");
+	mvaddstr(0, maxcols/2, "Drawn");
 	drawBoard(board);
 	
 	// Cleanup
